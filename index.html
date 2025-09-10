@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Varun Kumar Bhakta — CyberPunk GRC</title>
 
-  <!-- Tailwind CDN (quick prototyping) -->
+  <!-- Tailwind CDN for quick styling -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- External Libraries -->
+  <!-- Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
@@ -16,136 +16,70 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@1.6.0/dist/lottie-player.js"></script>
 
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/270/270798.png">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/270/270798.png" />
+  <meta name="description" content="Varun Kumar Bhakta — Cybersecurity, GRC, Risk Management, Audit Readiness" />
 
   <style>
-    /* Core theme */
     :root{
       --bg:#05060b;
-      --panel:#071125;
-      --neon:#00e6c6;
-      --accent:#00bfff;
-      --muted:#9aa3b2;
+      --panel: rgba(255,255,255,0.02);
+      --border: rgba(0,255,200,0.06); /* fixed rgba */
+      --neon: #00e6c6;
+      --accent: #00bfff;
+      --muted: #9fb7b0;
     }
-    html,body{height:100%}
-    body {
-      background: radial-gradient(ellipse at 20% 10%, rgba(0,230,198,0.04), transparent 10%),
-                  linear-gradient(180deg,#03040a 0%, #071122 60%, #02101a 100%);
-      color: #e6f7f2;
-      -webkit-font-smoothing:antialiased;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      overflow-x:hidden;
-    }
-
-    /* Particles canvas */
-    #particles-js { position: fixed; inset: 0; z-index: 0; }
-
-    /* glass panels */
+    html,body { height:100%; background: radial-gradient(ellipse at 20% 10%, rgba(0,230,198,0.02), transparent 10%), linear-gradient(180deg,#03040a 0%, #071122 60%, #02101a 100%); color:#e6f7f2; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    #particles-js { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .glass {
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid rgba(0,255,200,0.06);
+      border: 1px solid var(--border);
       backdrop-filter: blur(6px) saturate(120%);
       box-shadow: 0 6px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
     }
+    .neon { color: var(--neon); text-shadow: 0 0 8px rgba(0,230,198,0.13), 0 0 20px rgba(0,180,160,0.07); }
+    .muted { color: var(--muted); }
+    .glitch { position:relative; font-weight:800; }
+    .glitch::before, .glitch::after { content: attr(data-text); position:absolute; left:0; top:0; width:100%; opacity:0.85; }
+    .glitch::before { transform: translate3d(-2px,-2px,0); color:#00bfff; filter: blur(.6px); mix-blend-mode:screen; }
+    .glitch::after { transform: translate3d(2px,2px,0); color:#ff4d8d; filter: blur(.6px); mix-blend-mode:screen; }
+    @keyframes flicker { 0%{opacity:1}50%{opacity:.72}100%{opacity:1} }
+    .glitch { animation: flicker 2.8s ease-in-out infinite; }
 
-    /* neon headings */
-    .neon {
-      color: var(--neon);
-      text-shadow: 0 0 8px rgba(0,230,198,0.11), 0 0 24px rgba(0,180,160,0.08);
-    }
-
-    /* glitch heading */
-    .glitch {
-      position: relative;
-      font-weight: 800;
-      line-height:1;
-      font-family: 'Poppins', sans-serif;
-    }
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left:0; top:0;
-      width:100%;
-      opacity:0.8;
-      clip-path: inset(0 0 0 0);
-    }
-    .glitch::before { transform: translate3d(-2px, -2px, 0); color:#00bfff; mix-blend-mode: screen; filter: blur(.6px) }
-    .glitch::after { transform: translate3d(2px, 2px, 0); color:#ff4d8d; mix-blend-mode: screen; filter: blur(.6px) }
-    @keyframes flicker {
-      0% { opacity:1 }
-      50% { opacity:.65 }
-      100% { opacity:1 }
-    }
-    .glitch { animation: flicker 2.5s ease-in-out infinite }
-
-    /* hero effects */
-    .hero {
-      min-height: 90vh;
-      display: grid;
-      place-items: center;
-      z-index: 2;
-      position: relative;
-      padding-top: 6rem;
-      padding-bottom: 6rem;
-    }
-
-    /* project card hover parallax */
-    .proj-card { transform-style: preserve-3d; perspective: 1000px; }
-    .proj-inner {
-      transform: translateZ(0);
-      transition: transform .45s cubic-bezier(.2,.9,.3,1), box-shadow .45s;
-      will-change: transform;
-    }
-    .proj-card:hover .proj-inner {
-      transform: translateY(-8px) rotateX(4deg) rotateY(-4deg) translateZ(10px);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-    }
+    /* project card interaction */
+    .proj-card { perspective:1000px; transform-style:preserve-3d; }
+    .proj-inner { transition: transform .45s cubic-bezier(.2,.9,.3,1), box-shadow .45s; will-change: transform; }
+    .proj-card:hover .proj-inner { transform: translateY(-10px) rotateX(3deg) rotateY(-3deg) translateZ(12px); box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
 
     /* skill bars */
-    .skill-track { background: rgba(255,255,255,0.03); height:10px; border-radius:999px; overflow:hidden }
-    .skill-fill { height:10px; border-radius:999px; background: linear-gradient(90deg, rgba(0,230,198,0.9), rgba(0,130,255,0.8)); width:0%; }
+    .skill-track { background: rgba(255,255,255,0.03); height:12px; border-radius:999px; overflow:hidden; }
+    .skill-fill { height:12px; border-radius:999px; background: linear-gradient(90deg, rgba(0,230,198,0.95), rgba(0,130,255,0.85)); width:0%; }
 
-    /* subtle grid overlay */
-    .grid-overlay {
-      background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-      background-size: 30px 30px;
-      mix-blend-mode: overlay;
-      opacity:.18;
-      pointer-events:none;
-      position:absolute; inset:0;
-      z-index:1;
-    }
-
-    /* footer */
-    footer { border-top: 1px solid rgba(255,255,255,0.02); padding:2.5rem 0; color: #9fb7b0; background:transparent }
-
-    /* responsive tweaks */
-    @media (max-width:768px) {
-      .glitch::before, .glitch::after { display:none; }
+    /* responsive */
+    @media (max-width: 768px) {
+      .grid-3 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Particles / matrix -->
+  <!-- Background Particles -->
   <div id="particles-js" aria-hidden="true"></div>
 
-  <!-- Navigation -->
+  <!-- NAV -->
   <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-6xl px-4">
     <div class="flex items-center justify-between glass rounded-xl p-3">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-md bg-gradient-to-br from-[#001f1a] to-[#002a3a] flex items-center justify-center ring-1 ring-cyan-800">
-          <!-- small logo -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 12h18" stroke="#00e6c6" stroke-width="1.6"/><path d="M12 3v18" stroke="#00bfff" stroke-width="1.6"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 12h18" stroke="#00e6c6" stroke-width="1.4"/><path d="M12 3v18" stroke="#00bfff" stroke-width="1.4"/></svg>
         </div>
         <a class="text-white font-semibold neon" href="#">CyberPunk-GRC</a>
+        <span class="ml-2 text-xs muted">Varun Kumar Bhakta</span>
       </div>
 
       <div class="hidden md:flex items-center gap-4 text-sm text-slate-300">
         <a href="#about" class="hover:text-[#00e6c6]">About</a>
-        <a href="#skills" class="hover:text-[#00e6c6]">Skills</a>
-        <a href="#projects" class="hover:text-[#00e6c6]">Projects</a>
+        <a href="#projects" class="hover:text-[#00e6c6]">Risk Project</a>
+        <a href="#experience" class="hover:text-[#00e6c6]">Experience</a>
         <a href="#contact" class="hover:text-[#00e6c6]">Contact</a>
         <a href="https://github.com/CyberPunk-GRC" target="_blank" class="ml-3 px-3 py-1 rounded-md bg-gradient-to-r from-[#002844] to-[#00395a] text-xs">GitHub</a>
       </div>
@@ -156,230 +90,413 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero">
-    <div class="grid grid-cols-12 gap-6 items-center w-full max-w-6xl px-6 relative z-10">
+  <!-- HERO -->
+  <header class="min-h-[78vh] flex items-center z-10 relative">
+    <div class="max-w-6xl mx-auto w-full px-6 grid grid-cols-12 gap-6 items-center">
       <div class="col-span-12 md:col-span-7">
         <div class="glass rounded-2xl p-8 relative overflow-hidden">
-          <div class="grid-overlay" aria-hidden></div>
-
           <h1 class="text-4xl md:text-6xl glitch neon" data-text="VARUN KUMAR BHAKTA">VARUN KUMAR BHAKTA</h1>
-          <p class="mt-3 text-slate-300 max-w-xl">Cybersecurity • Governance, Risk & Compliance (GRC) • Risk Management & Audit Readiness</p>
+          <p class="mt-3 text-slate-300 max-w-xl">Results-oriented professional with a strong background in <strong>IT Security, Risk, Finance & Compliance</strong>, specializing in Federal and State government projects.</p>
 
-          <div class="mt-6 flex items-center gap-3">
+          <div class="mt-5 flex items-center gap-3">
             <div>
-              <span class="text-xs text-slate-400">I build</span>
-              <div id="typed" class="text-lg font-medium neon" aria-hidden></div>
+              <span class="text-xs muted block">I build</span>
+              <div id="typed" class="text-lg font-medium neon"></div>
             </div>
 
             <div class="ml-auto flex gap-2">
               <a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00151a] ring-1 ring-[#003a45]" href="https://www.linkedin.com/in/varun-kumar-bhakta7/" target="_blank">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M4 4h4v16H4z" stroke="#00e6c6" stroke-width="1.3"/><path d="M9 9h4v11H9z" stroke="#00bfff" stroke-width="1.3"/><circle cx="6" cy="6" r="1" fill="#00e6c6"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M4 4h4v16H4z" stroke="#00e6c6" stroke-width="1.2"/><path d="M9 9h4v11H9z" stroke="#00bfff" stroke-width="1.2"/><circle cx="6" cy="6" r="1" fill="#00e6c6"/></svg>
                 <span class="text-sm text-slate-100">LinkedIn</span>
               </a>
-              <a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#00284a] to-[#003860]" href="https://github.com/CyberPunk-GRC" target="_blank">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.9 9.6.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.5 1.1 3.1.8.1-.6.3-1.1.6-1.4-2.2-.3-4.5-1.2-4.5-5.3 0-1.2.4-2.2 1-3-.1-.3-.4-1.6.1-3.3 0 0 .9-.3 3 .9.9-.3 2-.5 3-.5 1 0 2.1.2 3 .5 2.1-1.2 3-.9 3-.9.5 1.7.2 3 .1 3.3.6.9 1 2 1 3 0 4.1-2.3 5-4.5 5.3.3.3.6.9.6 1.9v2.8c0 .3.2.6.7.5 4-1.3 6.8-5.1 6.8-9.6C22 6.6 17.5 2 12 2z" fill="#e6f7f2"/></svg>
-                <span class="text-sm text-slate-100">GitHub</span>
+              <a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#00284a] to-[#003860]" href="mailto:vkuma5@outlook.com">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 5.5h18v13H3z" stroke="#e6f7f2" stroke-width="1"/></svg>
+                <span class="text-sm text-slate-100">Email</span>
               </a>
             </div>
           </div>
 
-          <div class="mt-6 flex gap-3">
-            <div class="w-36 h-20 glass rounded-lg p-2">
-              <div class="text-xs text-slate-400">GRC Score</div>
-              <div class="text-2xl font-bold neon">87%</div>
-              <div class="text-xs text-slate-300">Maturity — continuous</div>
+          <div class="mt-6 grid grid-cols-3 gap-3">
+            <div class="p-3 rounded-lg glass">
+              <div class="text-xs muted">Location</div>
+              <div class="font-bold">Millersville, MD</div>
             </div>
-            <div class="w-36 h-20 glass rounded-lg p-2">
-              <div class="text-xs text-slate-400">Controls</div>
-              <div class="text-2xl font-bold neon">NIST • ISO • SOC</div>
-              <div class="text-xs text-slate-300">Framework-savvy</div>
+            <div class="p-3 rounded-lg glass">
+              <div class="text-xs muted">Phone</div>
+              <div class="font-bold">667-270-0032</div>
             </div>
-            <div class="w-36 h-20 glass rounded-lg p-2">
-              <div class="text-xs text-slate-400">Audit Readiness</div>
-              <div class="text-2xl font-bold neon">Prepared</div>
-              <div class="text-xs text-slate-300">Policy & evidence</div>
+            <div class="p-3 rounded-lg glass">
+              <div class="text-xs muted">Email</div>
+              <div class="font-bold">vkuma5@outlook.com</div>
             </div>
           </div>
 
         </div>
       </div>
 
-      <!-- Hero right: Lottie / illustration -->
       <div class="col-span-12 md:col-span-5">
         <div class="glass rounded-2xl p-6 flex flex-col items-center justify-center">
-          <!-- Lottie cyber/robot animation -->
           <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_jzlmwz7l.json"  background="transparent" speed="1" style="width:100%;max-width:360px;"  loop autoplay></lottie-player>
-          <div class="mt-3 text-slate-300 text-sm text-center">Cyber defense dashboard mock — live telemetry & threat feed</div>
+          <div class="mt-3 text-slate-300 text-sm text-center">Telemetry & GRC Dashboard concept</div>
         </div>
       </div>
+
     </div>
   </header>
 
-  <!-- About -->
-  <section id="about" class="py-16">
-    <div class="max-w-6xl mx-auto px-6 grid grid-cols-12 gap-6 items-start">
-      <div class="col-span-12 md:col-span-7 glass rounded-2xl p-8">
-        <h2 class="text-2xl neon">About Me</h2>
-        <p class="mt-3 text-slate-300">I’m a Governance, Risk & Compliance (GRC) focused cybersecurity practitioner. I design security programs, align controls with business goals, and prepare organizations for audits and continuous compliance. I map technical controls to risk outcomes and communicate security in business terms.</p>
-        <ul class="mt-4 grid grid-cols-2 gap-3 text-sm text-slate-300">
-          <li><strong class="text-slate-100">Frameworks:</strong> NIST RMF, ISO 27001, SOC 2, CIS</li>
-          <li><strong class="text-slate-100">Certifications:</strong> (add yours) — e.g., CISA, CISSP (planned)</li>
-          <li><strong class="text-slate-100">Tools:</strong> Excel, PowerBI, Python, Git</li>
-          <li><strong class="text-slate-100">Focus:</strong> Audit prep, control mapping, risk dashboards</li>
-        </ul>
-      </div>
-
-      <aside class="col-span-12 md:col-span-5 glass rounded-2xl p-6">
-        <h3 class="neon text-lg">Live Telemetry</h3>
-        <canvas id="telemetry-chart" width="400" height="220" aria-label="telemetry chart"></canvas>
-        <div class="mt-4 text-xs text-slate-400">Simulated security telemetry. Hover project cards to see more.</div>
-      </aside>
-    </div>
-  </section>
-
-  <!-- Skills -->
-  <section id="skills" class="py-16 relative">
+  <!-- ABOUT -->
+  <section id="about" class="py-12 relative z-10">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="neon text-2xl mb-6">Skills & Certifications</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="glass rounded-2xl p-6">
-          <h4 class="text-lg text-slate-100">Core Competencies</h4>
-          <div class="mt-4 space-y-4">
-            <div>
-              <div class="flex justify-between text-sm text-slate-300"><span>Risk Assessment</span><span>92%</span></div>
-              <div class="skill-track mt-2"><div class="skill-fill" data-fill="92"></div></div>
+      <div class="glass rounded-2xl p-8 grid md:grid-cols-3 gap-6 items-start">
+        <div class="md:col-span-2">
+          <h2 class="neon text-2xl">Profile</h2>
+          <p class="mt-3 text-slate-300">Results-oriented professional with a strong background in IT Security, Risk, Finance and Compliance management specializing in Federal and State government projects. I leverage industry frameworks and standards to improve security posture, ensure compliance, and drive risk mitigation.</p>
+
+          <h3 class="mt-6 text-lg neon">Technical Skills & Frameworks</h3>
+          <div class="mt-3 grid grid-cols-2 gap-3">
+            <div class="p-3 rounded-lg glass">
+              <div class="font-semibold">Frameworks</div>
+              <div class="text-sm muted">NIST, FISMA, MARS-E, ISO/IEC 27001, MITRE ATT&CK, SOC 2, CMMC</div>
             </div>
-            <div>
-              <div class="flex justify-between text-sm text-slate-300"><span>Control Mapping</span><span>88%</span></div>
-              <div class="skill-track mt-2"><div class="skill-fill" data-fill="88"></div></div>
+            <div class="p-3 rounded-lg glass">
+              <div class="font-semibold">Tools</div>
+              <div class="text-sm muted">Tenable.io, Nessus, Azure Gov, Kibana, PowerBI, ServiceNow, Burp Suite</div>
             </div>
-            <div>
-              <div class="flex justify-between text-sm text-slate-300"><span>Audit Readiness</span><span>85%</span></div>
-              <div class="skill-track mt-2"><div class="skill-fill" data-fill="85"></div></div>
+            <div class="p-3 rounded-lg glass">
+              <div class="font-semibold">Certifications</div>
+              <div class="text-sm muted">CC (ISC)², CISA (In Progress), SAS, Multiple Graduate Certificates (UIS)</div>
             </div>
-            <div>
-              <div class="flex justify-between text-sm text-slate-300"><span>Policy & Governance</span><span>90%</span></div>
-              <div class="skill-track mt-2"><div class="skill-fill" data-fill="90"></div></div>
+            <div class="p-3 rounded-lg glass">
+              <div class="font-semibold">Other</div>
+              <div class="text-sm muted">Linux, Windows, Security Policy, ATO, SIEM reviews</div>
             </div>
           </div>
         </div>
 
-        <div class="glass rounded-2xl p-6">
-          <h4 class="text-lg text-slate-100">Skill Radar</h4>
-          <canvas id="radarChart" width="400" height="260"></canvas>
-          <div class="mt-3 text-xs text-slate-400">Interactive radar showing competency spread across GRC domains.</div>
-        </div>
+        <aside class="p-4 glass rounded-xl">
+          <h4 class="neon text-lg">Education</h4>
+          <div class="mt-2 text-sm muted">
+            <strong>MS — Management Information Systems</strong><br/>University of Illinois Springfield (2023)<br/><br/>
+            <strong>BCom — Minor Computer Science</strong><br/>Osmania University (2017)
+          </div>
+        </aside>
       </div>
     </div>
   </section>
 
-  <!-- Projects -->
-  <section id="projects" class="py-16">
+  <!-- RISK MANAGEMENT PROJECT -->
+  <section id="projects" class="py-12 relative z-10">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="neon text-2xl mb-6">Projects & Labs</h2>
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="neon text-2xl">Risk Management Project — Health Network (Fictional)</h2>
+        <div class="text-sm muted">June 2023 — Risk Assessment & BCP</div>
+      </div>
 
       <div class="grid md:grid-cols-3 gap-6">
-        <!-- Project card 1 -->
-        <article class="proj-card glass rounded-2xl p-5">
-          <div class="proj-inner">
-            <div class="flex items-start gap-3">
-              <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-[#001e1a] to-[#002b34] flex items-center justify-center ring-1 ring-cyan-900">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="#00e6c6" stroke-width="1.4"/><path d="M12 3v18" stroke="#00bfff" stroke-width="1.4"/></svg>
+        <!-- Left: Overview -->
+        <div class="glass rounded-2xl p-6 md:col-span-1">
+          <h3 class="font-semibold neon">Project Overview</h3>
+          <p class="mt-3 text-sm text-slate-300">Risk assessment for Health Network's product suite — <strong>VoltronMessenger</strong>, <strong>VoltronPay</strong>, and <strong>VoltronConnect</strong>. Scope included servers, web applications, availability & integrity of services.</p>
+
+          <h4 class="mt-4 text-sm neon">Infrastructure</h4>
+          <p class="text-sm muted mt-1">3 production data centers, ~3,000 production servers, ~600 employees, ~650 corporate laptops & mobile devices. HTTPS integration across products.</p>
+
+          <h4 class="mt-4 text-sm neon">Scope & Purpose</h4>
+          <ul class="list-disc ml-5 text-sm muted mt-1">
+            <li>Secure web servers & web applications</li>
+            <li>Protect availability & integrity</li>
+            <li>Update assessments with control effectiveness & system changes</li>
+          </ul>
+        </div>
+
+        <!-- Middle: Tabbed Products -->
+        <div class="glass rounded-2xl p-6 md:col-span-2">
+          <div class="flex gap-3 items-center mb-4">
+            <button class="tab-btn px-3 py-1 rounded-md bg-[#001523] text-sm ring-1 ring-cyan-900" data-tab="voltron">Voltron Products</button>
+            <button class="tab-btn px-3 py-1 rounded-md bg-transparent text-sm ring-1 ring-slate-800" data-tab="threats">Threats & Vulnerabilities</button>
+            <button class="tab-btn px-3 py-1 rounded-md bg-transparent text-sm ring-1 ring-slate-800" data-tab="mitigations">Mitigations</button>
+            <button class="tab-btn px-3 py-1 rounded-md bg-transparent text-sm ring-1 ring-slate-800" data-tab="bia">BIA</button>
+          </div>
+
+          <!-- Tab content -->
+          <div id="tab-content">
+            <!-- Voltron -->
+            <div class="tab-panel" data-panel="voltron">
+              <h4 class="neon font-semibold">Company Products</h4>
+
+              <div class="mt-4 grid md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">VoltronMessenger</div>
+                  <p class="text-sm muted mt-1">Primary revenue source: secure electronic messaging for hospitals & clinics. Handles PHI messages routed between customers and providers.</p>
+                </div>
+
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">VoltronPay</div>
+                  <p class="text-sm muted mt-1">Web portal for payments & billings used by customers. Interacts with credit card processors and hosts payment flows in production sites.</p>
+                </div>
+
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">VoltronConnect</div>
+                  <p class="text-sm muted mt-1">Online directory listing doctors & clinics. Stores personal information, addresses, certifications, and offerings. Providers manage profiles.</p>
+                </div>
               </div>
-              <div>
-                <h3 class="text-lg font-semibold">NIST Risk Dashboard</h3>
-                <p class="text-slate-300 text-sm mt-1">Interactive dashboard linking NIST CSF to control maturity & evidence.</p>
+
+              <h4 class="neon mt-6">Assets</h4>
+              <ul class="list-disc ml-5 text-sm muted">
+                <li>Hardware: production servers, laptops, mobile devices</li>
+                <li>Software: messaging services, payment portal, directory app</li>
+                <li>Information: PHI, billing data, provider records</li>
+              </ul>
+            </div>
+
+            <!-- Threats -->
+            <div class="tab-panel hidden" data-panel="threats">
+              <h4 class="neon font-semibold">Threats & Vulnerabilities</h4>
+              <div class="mt-4 grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Top Threats (ranked)</div>
+                  <ol class="list-decimal ml-5 text-sm muted mt-2">
+                    <li>Internet threats (external attacks) — Rating: 100</li>
+                    <li>Loss of customers / sensitive info — Rating: 80</li>
+                    <li>Insider threats — Rating: 64</li>
+                    <li>Loss of data — Rating: 50</li>
+                    <li>Regulatory changes — Rating: 10</li>
+                  </ol>
+                </div>
+
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Vulnerabilities by product</div>
+                  <ul class="list-disc ml-5 text-sm muted mt-2">
+                    <li><strong>VoltronMessenger:</strong> plaintext/weak encryption, missing patches, weak access controls</li>
+                    <li><strong>VoltronPay:</strong> no IDS, missing AV, weak patching, weak auth</li>
+                    <li><strong>VoltronConnect:</strong> directory traversal risk, weak auth, insufficient access control</li>
+                    <li><strong>Cross-cutting:</strong> weak authentication/authorization is highest common vulnerability</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-6 grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Information Sources</div>
+                  <p class="text-sm muted mt-2">Document review, interviews, system logs, SWOT analysis, vendor dependencies, prior assessments.</p>
+                </div>
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Compliance & Regulations</div>
+                  <ol class="list-decimal ml-5 text-sm muted mt-2">
+                    <li>Written policies & standards</li>
+                    <li>Designate compliance officers & committees</li>
+                    <li>Employee training & education</li>
+                    <li>Anonymous reporting channels</li>
+                    <li>Corrective actions & monitoring</li>
+                    <li>Internal audit & monitoring</li>
+                    <li>Rapid incident response & corrective actions</li>
+                  </ol>
+                </div>
               </div>
             </div>
 
-            <div class="mt-4 text-sm flex gap-2">
-              <a href="portfolio-details.html" class="px-3 py-1 rounded-md bg-[#001923] ring-1 ring-cyan-900 text-xs">View →</a>
-              <a href="#" class="px-3 py-1 rounded-md bg-[#001923] ring-1 ring-cyan-900 text-xs">Live Demo</a>
-            </div>
-          </div>
-        </article>
+            <!-- Mitigations -->
+            <div class="tab-panel hidden" data-panel="mitigations">
+              <h4 class="neon font-semibold">Risk Mitigation & Action Plan</h4>
 
-        <!-- Project card 2 -->
-        <article class="proj-card glass rounded-2xl p-5">
-          <div class="proj-inner">
-            <div class="flex items-start gap-3">
-              <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-[#1a001a] to-[#3a003a] flex items-center justify-center ring-1 ring-magenta-900">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="#ff4d8d" stroke-width="1.3"/></svg>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold">ISO 27001 Gap Analysis</h3>
-                <p class="text-slate-300 text-sm mt-1">Automated gap reports with recommended remediation priorities.</p>
-              </div>
-            </div>
-            <div class="mt-4 text-sm flex gap-2">
-              <a href="portfolio-details copy 2.html" class="px-3 py-1 rounded-md bg-[#1a0020] ring-1 ring-magenta-900 text-xs">View →</a>
-              <a href="#" class="px-3 py-1 rounded-md bg-[#1a0020] ring-1 ring-magenta-900 text-xs">Report</a>
-            </div>
-          </div>
-        </article>
+              <div class="mt-4 grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Loss of company data (physical)</div>
+                  <p class="text-sm muted mt-2">Plan: Secure server rooms with badge & biometric access. Action: implement within 1 month. Controls: Physical/technical.</p>
+                </div>
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Lost/stolen assets</div>
+                  <p class="text-sm muted mt-2">Plan: Regular backups, device encryption, strong passwords, biometric options. Action: Immediate. Controls: Technical.</p>
+                </div>
 
-        <!-- Project card 3 -->
-        <article class="proj-card glass rounded-2xl p-5">
-          <div class="proj-inner">
-            <div class="flex items-start gap-3">
-              <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-[#001a2a] to-[#00304a] flex items-center justify-center ring-1 ring-blue-900">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#00bfff" stroke-width="1.2"/></svg>
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Production outages / DR</div>
+                  <p class="text-sm muted mt-2">Plan: Multi-site redundancy across three DCs, regular DR tests. Action: within 1 week for DR prioritization. Controls: Physical/Procedural/Technical.</p>
+                </div>
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Internet threats / patching</div>
+                  <p class="text-sm muted mt-2">Plan: Patch management, network backups, IDS/IPS, vulnerability scanning via Tenable/Nessus. Action: Immediately. Controls: Technical.</p>
+                </div>
+
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Insider threats</div>
+                  <p class="text-sm muted mt-2">Plan: Least privilege, monitoring, DLP, alerts (Snort/IDS), sanctions. Action: within 1 week. Controls: Procedural & technical.</p>
+                </div>
+
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Regulatory changes</div>
+                  <p class="text-sm muted mt-2">Plan: Governance committee to draft updates as needed. Action: within 6 months for policy-level changes.</p>
+                </div>
               </div>
-              <div>
-                <h3 class="text-lg font-semibold">SOC 2 Audit Prep</h3>
-                <p class="text-slate-300 text-sm mt-1">Controls mapped to Trust Services Criteria with evidence playbooks.</p>
+
+              <h5 class="neon mt-6">Cost-Benefit (Qualitative)</h5>
+              <p class="text-sm muted mt-2">Backups, biometrics, redundancy, and monitoring reduce operational risk and increase incident detection — qualitative benefits justify implementation even when a numeric ROI is not feasible.</p>
+            </div>
+
+            <!-- BIA -->
+            <div class="tab-panel hidden" data-panel="bia">
+              <h4 class="neon font-semibold">Business Impact Analysis & BCP</h4>
+
+              <div class="mt-4 grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Critical Systems</div>
+                  <ul class="list-disc ml-5 text-sm muted mt-2">
+                    <li>Production servers — Most critical</li>
+                    <li>HTTPS websites & apps — Critical</li>
+                    <li>Corporate laptops & mobile devices — Least critical</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-lg glass">
+                  <div class="font-semibold">Impact Categories</div>
+                  <p class="text-sm muted mt-2">Severe (>$1M) — Production servers; Moderate (~$550k) — web apps; Minimal (~$75k) — laptops/devices</p>
+                </div>
               </div>
-            </div>
-            <div class="mt-4 text-sm flex gap-2">
-              <a href="portfolio-details copy 3.html" class="px-3 py-1 rounded-md bg-[#001225] ring-1 ring-blue-900 text-xs">View →</a>
-              <a href="#" class="px-3 py-1 rounded-md bg-[#001225] ring-1 ring-blue-900 text-xs">Checklist</a>
-            </div>
-          </div>
-        </article>
+
+              <h5 class="neon mt-6">Recovery Objectives</h5>
+              <div class="mt-3 overflow-x-auto">
+                <table class="min-w-full text-sm text-left">
+                  <thead class="text-xs uppercase text-muted">
+                    <tr>
+                      <th class="px-3 py-2">System Resource</th>
+                      <th class="px-3 py-2">MTD</th>
+                      <th class="px-3 py-2">RTO</th>
+                      <th class="px-3 py-2">RPO</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="odd:bg-transparent even:bg-white/2">
+                      <td class="px-3 py-2">Production servers</td>
+                      <td class="px-3 py-2">15 hours</td>
+                      <td class="px-3 py-2">24 hours</td>
+                      <td class="px-3 py-2">12 hours</td>
+                    </tr>
+                    <tr>
+                      <td class="px-3 py-2">HTTPS websites & applications</td>
+                      <td class="px-3 py-2">30 hours</td>
+                      <td class="px-3 py-2">35 hours</td>
+                      <td class="px-3 py-2">12 hours</td>
+                    </tr>
+                    <tr>
+                      <td class="px-3 py-2">Corporate laptops & mobile devices</td>
+                      <td class="px-3 py-2">50 hours</td>
+                      <td class="px-3 py-2">90 hours</td>
+                      <td class="px-3 py-2">12 hours</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="mt-6 p-4 rounded-lg glass">
+                <div class="font-semibold">Recovery Priority</div>
+                <ol class="list-decimal ml-5 text-sm muted mt-2">
+                  <li>Production servers — RTO 24h</li>
+                  <li>HTTPS websites & apps — RTO 35h</li>
+                  <li>Laptops & mobile devices — RTO 90h</li>
+                </ol>
+              </div>
+
+            </div> <!-- end BIA -->
+
+          </div> <!-- end tab-content -->
+        </div> <!-- end middle -->
+      </div> <!-- end grid -->
+
+      <!-- Risk chart -->
+      <div class="mt-8 glass rounded-2xl p-6">
+        <h4 class="neon">Risk Ratings — Visual</h4>
+        <canvas id="riskChart" style="max-height:360px"></canvas>
+        <div class="mt-3 text-sm muted">Risk score (likelihood × impact). Internet threats score highest.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="py-12 relative z-10">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="neon text-2xl mb-4">Professional Experience</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold">Lead Security Analyst — Serigor, Inc</h3>
+          <p class="text-sm muted">Sep 2023 - Present | Annapolis, MD</p>
+          <ul class="list-disc ml-5 mt-3 text-sm muted">
+            <li>Conducted risk assessments and vulnerability scans — reduced incidents by 30%.</li>
+            <li>Developed ATO documentation & baseline controls per NIST 800-53 & IRS Pub 1075.</li>
+            <li>Implemented MFA/SSO (Cisco Duo) and used Tenable/Nessus & Azure Gov Cloud Security Advisor.</li>
+            <li>Reviewed SIEM logs with Kibana/Elastic, created findings & POA&M ahead of IRS audit.</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold">Governance, Risk & Compliance Intern — Illinois DoIT</h3>
+          <p class="text-sm muted">Nov 2021 - May 2023 | Springfield, IL</p>
+          <ul class="list-disc ml-5 mt-3 text-sm muted">
+            <li>Reviewed SOC2 reports and tracked IRS Safeguard findings & corrective action plans.</li>
+            <li>Developed PowerBI dashboards to reflect compliance KPIs and remediation progress.</li>
+            <li>Monitored IAM, logical access, and implemented baselines for password strength (FIPS/FISMA).</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold">Financial Analyst — Deloitte</h3>
+          <p class="text-sm muted">Jan 2020 - Aug 2021 | Hyderabad, India</p>
+          <ul class="list-disc ml-5 mt-3 text-sm muted">
+            <li>Federal client invoicing, reconciliation, reporting for portfolios > $1.5B.</li>
+            <li>Generated reports with IBM Cognos and analyzed billing/collections metrics.</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold">Associate Financial Analyst — Wells Fargo</h3>
+          <p class="text-sm muted">Nov 2017 - Dec 2019 | Hyderabad, India</p>
+          <ul class="list-disc ml-5 mt-3 text-sm muted">
+            <li>Analyzed financial statements (US GAAP & IFRS), credit merit, and EBITDA calculations.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="py-12">
+  <!-- CONTACT -->
+  <section id="contact" class="py-12 relative z-10">
     <div class="max-w-6xl mx-auto px-6">
       <div class="glass rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
           <h3 class="neon text-xl">Let's secure the next system together</h3>
-          <p class="text-slate-300 mt-2">Connect on LinkedIn or open a conversation via email.</p>
+          <p class="muted mt-2 text-sm">Reach out for consultancy, ATO preparation, risk assessments, and GRC engineering.</p>
         </div>
+
         <div class="flex gap-3">
-          <a class="px-4 py-2 rounded-md bg-[#001523] ring-1 ring-cyan-900" href="mailto:varun.email@example.com">Email</a>
+          <a class="px-4 py-2 rounded-md bg-[#001523] ring-1 ring-cyan-900" href="mailto:vkuma5@outlook.com">Email</a>
+          <a class="px-4 py-2 rounded-md bg-[#001523] ring-1 ring-cyan-900" href="https://github.com/CyberPunk-GRC" target="_blank">GitHub</a>
           <a class="px-4 py-2 rounded-md bg-[#001523] ring-1 ring-cyan-900" href="https://www.linkedin.com/in/varun-kumar-bhakta7/" target="_blank">LinkedIn</a>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="mt-12">
+  <footer class="mt-12 relative z-10">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <div class="glass rounded-xl p-4 inline-block">
-        © <span id="year"></span> Varun Kumar Bhakta • CyberPunk-GRC
+        © <span id="year"></span> Varun Kumar Bhakta — CyberPunk-GRC
       </div>
     </div>
   </footer>
 
-  <!-- JS initializers -->
+  <!-- SCRIPTS & INIT -->
   <script>
-    // typed intro lines
+    // Typed.js for hero
     const typed = new Typed('#typed', {
-      strings: ['risk dashboards', 'audit-ready controls', 'GRC automation', 'compliance engineering'],
-      typeSpeed: 40,
-      backSpeed: 18,
-      backDelay: 1400,
-      loop: true
+      strings: ['Lead Security Analyst', 'GRC Specialist', 'Risk Dashboard Designer', 'Compliance Engineer'],
+      typeSpeed: 40, backSpeed: 20, backDelay: 1400, loop: true
     });
 
-    // particles.js (matrix / cyber effect)
+    // Particles (matrix-like dots)
     particlesJS("particles-js", {
       "particles": {
-        "number": { "value": 120, "density": { "enable": true, "value_area": 800 } },
+        "number": { "value": 110, "density": { "enable": true, "value_area": 800 } },
         "color": { "value": ["#00e6c6","#00bfff","#ff4d8d"] },
         "shape": { "type": "circle" },
         "opacity": { "value": 0.6, "random": true },
@@ -394,66 +511,68 @@
       "retina_detect": true
     });
 
-    // GSAP skill bars animation on load & ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-    document.querySelectorAll('.skill-fill').forEach((el) => {
-      const pct = el.getAttribute('data-fill') || 70;
-      gsap.to(el, { width: pct + '%', duration: 1.6, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 80%' }});
+    // GSAP: subtle entrance animation
+    gsap.from('.glass', { opacity: 0, y: 14, duration: 0.9, stagger: 0.06, ease: "power3.out" });
+
+    // Tab UI logic
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const tab = btn.dataset.tab;
+        // buttons visual
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('bg-[#001523'])); // safe no-op
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.replace('bg-[#001523]','bg-transparent'));
+        btn.classList.add('bg-[#001523]');
+        // panels
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+        const panel = document.querySelector(`.tab-panel[data-panel="${tab}"]`);
+        if (panel) panel.classList.remove('hidden');
+      });
     });
 
-    // telemetry chart (simulated)
-    const ctx = document.getElementById('telemetry-chart').getContext('2d');
-    const telemetryChart = new Chart(ctx, {
-      type: 'line',
+    // Default show first tab (voltron)
+    (function(){ const first = document.querySelector('.tab-btn[data-tab="voltron"]'); if(first) first.click(); })();
+
+    // Risk Chart
+    const riskCtx = document.getElementById('riskChart').getContext('2d');
+    const riskChart = new Chart(riskCtx, {
+      type: 'bar',
       data: {
-        labels: Array.from({length: 20}, (_,i)=> i),
+        labels: ['Internet Threats','Loss of Customers','Insider Threats','Loss of Data','Regulatory Changes'],
         datasets: [{
-          label: 'Alerts / min',
-          data: Array.from({length: 20}, ()=> Math.round(10 + Math.random()*30)),
-          borderColor: '#00e6c6',
-          backgroundColor: 'rgba(0,230,198,0.08)',
-          tension: 0.35,
-          pointRadius: 0
+          label: 'Risk Score',
+          data: [100, 80, 64, 50, 10],
+          backgroundColor: ['#ff4d8d','#00e6c6','#00bfff','#ffd166','#9fb7b0'],
+          borderRadius: 6
         }]
       },
       options: {
         responsive:true,
-        scales: { x:{ display:false }, y:{ ticks:{ color:'#9fb7b0' } } },
-        plugins: { legend:{ display:false } }
-      }
-    });
-
-    // Radar chart: skills
-    const radarCtx = document.getElementById('radarChart').getContext('2d');
-    const radar = new Chart(radarCtx, {
-      type: 'radar',
-      data: {
-        labels: ['Risk','Controls','Audit','Policy','Automation','Reporting'],
-        datasets: [{
-          label: 'Proficiency',
-          data: [92,88,85,90,78,86],
-          borderColor: '#00bfff',
-          backgroundColor: 'rgba(0,191,255,0.12)',
-          pointBackgroundColor: '#00e6c6'
-        }]
-      },
-      options: {
-        responsive:true,
+        plugins: { legend:{ display:false } },
         scales: {
-          r: { grid: { color:'rgba(255,255,255,0.04)' }, angleLines:{ color:'rgba(255,255,255,0.02)' }, ticks:{ color:'#9fb7b0', stepSize:20 } }
-        },
-        plugins: { legend:{ display:false } }
+          y: { beginAtZero: true, max: 110, ticks:{ color: 'rgba(255,255,255,0.8)' } },
+          x: { ticks:{ color: 'rgba(255,255,255,0.85)' } }
+        }
       }
     });
 
-    // simple page load animations
-    gsap.from('.glass', { opacity:0, y:12, stagger:.06, duration:.9, ease:'power3.out' });
-
-    // dynamic year
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // keyboard accessibility: focus outline
-    document.addEventListener('keydown', (e) => { if(e.key === 'Tab') document.documentElement.style.scrollBehavior = 'smooth'; }, { once:true });
+    // Ensure skill bars are not broken: if present animate them
+    gsap.utils.toArray('.skill-fill').forEach(el => {
+      const pct = el.dataset.percent || 80;
+      gsap.to(el, { width: pct + '%', duration: 1.4, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' }});
+    });
+
+    // Accessibility: smooth scroll for anchor clicks
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        if(id) document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
   </script>
 </body>
 </html>
